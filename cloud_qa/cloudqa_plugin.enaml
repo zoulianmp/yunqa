@@ -1,0 +1,131 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2013, Nucleic Development Team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file COPYING.txt, distributed with this software.
+#------------------------------------------------------------------------------
+from enaml.workbench.api import Extension, PluginManifest
+from workflow.api import ActionItem, Branding, MenuItem, ItemGroup
+
+
+
+from workflow.api import load_icon
+
+
+def data_management_factory(workbench):
+    from data_management_worknode.data_management_worknode import DataManagementWorknode
+
+   
+
+    node = DataManagementWorknode()
+    node.window_title = 'Data Management'
+   
+    #navigate parameters
+    
+    node.navigate_icon_normal = 'DataManagement.png'
+    node.navigate_icon_active = 'DataManagementSel.png'  
+    node.navigate_position =0
+
+    return node
+
+
+def sample_worknode_factory(workbench):
+    from sample_worknode.sample_worknode import SampleWorknode
+
+   
+
+    node = SampleWorknode()
+    node.window_title = 'Sample Node'
+
+    node.navigate_icon_normal = 'cloudmcsim.png'
+    node.navigate_icon_active = 'cloudmcsims.png'  
+    node.navigate_position =1
+
+    return node
+
+
+def persistent_worknode_factory(workbench):
+    from persistent_worknode.persistent_worknode import PersistentWorknode
+    node = PersistentWorknode()
+    node.window_title = 'Persistent View'
+
+    node.navigate_icon_normal = 'dataanalysis.png'
+    node.navigate_icon_active = 'dataanalysiss.png'  
+    node.navigate_position =2
+    return node
+
+
+enamldef CloudQAManifest(PluginManifest):
+    """ The plugin manifest for the primary example plugin.
+
+    This plugin acts as the entry point for all other plugins in this
+    example. It contributes the window branding, default actions, and
+    the worknode definitions.
+
+    """
+    
+    id = 'cloud_qa'
+    Extension:
+        id = 'branding'
+        point = 'enaml.workbench.workflow.branding'
+        Branding:
+            title = 'Cloud QA'
+            icon = load_icon('cloudqaband.png')
+           
+    Extension:
+        id = 'actions'
+        point = 'enaml.workbench.workflow.actions'
+        MenuItem:
+            path = '/file'
+            label = 'File'
+            ItemGroup:
+                id = 'user'
+        MenuItem:
+            path = '/worknode'
+            label = 'worknode'
+            ItemGroup:
+                id = 'nodes'
+        ActionItem:
+            path = '/file/close'
+            label = 'Close'
+            shortcut = 'Ctrl+Q'
+            command = 'enaml.workbench.workflow.close_window'
+        ActionItem:
+            path = '/worknode/first'
+            label = 'First'
+            shortcut = 'Ctrl+1'
+            group = 'nodes'
+            command = 'enaml.workbench.workflow.select_worknode'
+            parameters = {'worknode': 'sample.first_view'}
+        ActionItem:
+            path = '/worknode/second'
+            label = 'Second'
+            shortcut = 'Ctrl+2'
+            group = 'nodes'
+            command = 'enaml.workbench.workflow.select_worknode'
+            parameters = {'worknode': 'sample.second_view'}
+        ActionItem:
+            path = '/worknode/persistent'
+            label = 'Persistent'
+            shortcut = 'Ctrl+3'
+            group = 'nodes'
+            command = 'enaml.workbench.workflow.select_worknode'
+            parameters = {'worknode': 'sample.persistent_view'}
+        ActionItem:
+            path = '/worknode/close'
+            label = 'Close Worknode'
+            shortcut = 'Ctrl+D'
+            command = 'enaml.workbench.workflow.close_worknode'
+    Extension:
+        id = 'data_management'
+        point = 'enaml.workbench.workflow.worknodes'
+        factory = data_management_factory 
+    Extension:
+        id = 'sample'
+        point = 'enaml.workbench.workflow.worknodes'
+        factory = sample_worknode_factory
+    Extension:
+        id = 'persistent'
+        point = 'enaml.workbench.workflow.worknodes'
+        factory = persistent_worknode_factory
