@@ -18,9 +18,8 @@ from enaml.image import Image
 from enaml.layout.api import vbox, hbox, spacer
 from enaml.widgets.api import Window, Container, ComboBox, ImageView,PushButton
 
-
-
-iconimage_path = '' 
+#The global icom image path for workflow application development
+ICONIMAGE_PATH = ''
 
 
 
@@ -111,20 +110,20 @@ def update_iconpath(mainpath):
     
     
     
-    global iconimage_path 
+    global ICONIMAGE_PATH 
   
     
     import os
    
-    iconimage_path= os.path.join(os.path.dirname(mainpath), 'images')
+    ICONIMAGE_PATH= os.path.join(os.path.dirname(mainpath), 'images')
     
-    print "in the update_iconpath: ", iconimage_path
+    print "in the update_iconpath: ", ICONIMAGE_PATH
 
 
 
     
 def load_icon(name): 
-    return _load_icon_(iconimage_path,name)
+    return _load_icon_(ICONIMAGE_PATH,name)
 
 def _load_icon_(path,name):    
     fname = os.path.join(path, name)
@@ -138,7 +137,7 @@ def _load_icon_(path,name):
 
 
 def load_icon2(normalname,activename):
-    return _load_icon2_(iconimage_path,normalname,activename)
+    return _load_icon2_(ICONIMAGE_PATH,normalname,activename)
 
 
 def _load_icon2_(path,normalname,activename):

@@ -18,7 +18,7 @@ from enaml.widgets.api import (
 
 
 from workflow.api import load_icon2,get_worknodes_naviagate_parameters,update_iconpath, \
-                         iconimage_path
+                         ICONIMAGE_PATH
 
 
 
