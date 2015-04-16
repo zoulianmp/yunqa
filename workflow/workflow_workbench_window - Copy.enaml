@@ -105,9 +105,8 @@ enamldef WorkflowWorkbenchWindow(MainWindow):
         padding = 0   
         Splitter:
             orientation = 'horizontal'
-            hug_width = 'medium'
-        
-            
+            hug_width = 'strong'
+          
             SplitItem: navbar:
 
                 stretch = 1
@@ -119,11 +118,12 @@ enamldef WorkflowWorkbenchWindow(MainWindow):
                    
         
             SplitItem: nodecontent:
-                stretch = 150 
+                stretch = 120  
                 collapsible = False    
-              
-                Include: 
-                    objects << filter(None, [window_model.worknode.content])
+                Container: right_content:
+                    padding = 0
+                    Include: 
+                        objects << filter(None, [window_model.worknode.content])
     
           
  

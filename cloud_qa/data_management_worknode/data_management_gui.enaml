@@ -11,96 +11,66 @@ from enaml.workbench.ui.api import ActionItem, MenuItem, ItemGroup
 
 
 
+from cloud_qa.ext_widgets.qt_list_str_widget import QtListStrWidget
+from enaml.core.api import Conditional
 
 
-import os
-
-from enaml.icon import Icon,IconImage
-from enaml.image import Image
 from enaml.layout.api import vbox, hbox, spacer
-from enaml.widgets.api import Window, Container, ComboBox, ImageView,PushButton
-
-from workflow.api import load_icon2,ICONIMAGE_PATH
-
-
-
-def image_path(name):
-    global ICONIMAGE_PATH
+from enaml.widgets.api import Window, Container, ComboBox, ImageView,PushButton, \
+                              Notebook, Page
+import enaml
+with enaml.imports():
+        from images_viewer import ImagesViewer
     
-    dirname = ICONIMAGE_PATH
-    return os.path.join(dirname, 'images', name)
-
-
-IMAGES = {
-    'Image A': Image(data=open(image_path('img1.png'), 'rb').read()),
-    'Image B': Image(data=open(image_path('img2.png'), 'rb').read()),
-    'Image C': Image(data=open(image_path('img3.png'), 'rb').read()),
-}
-
-
-
-#iconimage_path = os.path.join(os.path.dirname(__file__), 'images')
-
-
-
-WELCOM_ICON =  load_icon2('welcome.png','welcomes.png')
-
-DICOMRT_ICON = load_icon2('dicomrt.png','dicomrts.png')
-
-TRAJECTORY_ICON = load_icon2('trajectory.png','trajectorys.png')
-
-CLOUDMCSIM_ICON = load_icon2('cloudmcsim.png','cloudmcsims.png')
-
-
-enamldef FirstView(Container):
-        constraints = [
-            vbox(hbox(pt1,pt2,pt3,pt4,spacer),
-                 hbox(cbox, spacer), 
-                 img),
-        ]
-       
-        PushButton: pt1:
-          #  text = 'Push Me'
-            icon = WELCOM_ICON
-            icon_size = (48,48)
-            clicked :: print 'I was clicked!'
-
-        PushButton: pt2:
-            #text = 'Toggle Me'
-            icon = DICOMRT_ICON
-            icon_size = (48,48)
-            checkable = True
-            toggled :: print 'I was toggled'
-         
-        PushButton: pt3:
-           # text = 'Push Me'
-            icon = TRAJECTORY_ICON
-            icon_size = (48,48)
-            clicked :: print 'I was clicked!'
-
-        PushButton: pt4:
-           # text = 'Push Me'
-            icon = CLOUDMCSIM_ICON
-            icon_size = (48,48)
-            clicked :: print 'I was clicked!'
-
-        ComboBox: cbox:
-            items = sorted(IMAGES.keys())
-            index = 0
-        ImageView: img:
-            image << IMAGES[cbox.selected_item]
-
  
 
 
-enamldef DataManagementGUI(Container):
-     Container:
-   
-         FirstView: firstview:
-             pass
+enamldef DataManagementGUI(Container): 
+        padding = 0  
+        Notebook:
+            tabs_closable = False
+            tabs_movable = False
 
+            Page:
+                title = 'Patients List'
+                Container:
+                    hug_height = 'strong'
+                 
+                
+                    QtListStrWidget: list_view:
+                        hug_width = 'medium'
+                        hug_height = 'medium'
+                        items << sorted(['233','2323','23'])
+                     
+                    Conditional: instr_form:
+                        condition << bool(True)
+                
+                    PushButton: add:
+                        text = 'Add'
+                      
+                          
+                    PushButton: edit:
+                        text = 'Edit'
+                    
+                    PushButton: delete:
+                        text = 'Delete'
+                     
 
+            Page:
+                title = 'DataImporter'
+              #  enabled = False
+                Container:
+                     ImagesViewer:
+                          pass
 
+            Page:
+                title = 'DataReports'
+               # enabled = False
+                Container:
+                     ImagesViewer:
+                          pass
+
+           
 
 
 

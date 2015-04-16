@@ -13,6 +13,21 @@ from workflow.api import ActionItem, Branding, MenuItem, ItemGroup
 from workflow.api import load_icon
 
 
+def welcome_worknode_factory(workbench):
+    from welcome_worknode.welcome_worknode import WelcomeWorknode
+
+   
+
+    node = WelcomeWorknode()
+    node.window_title = 'Welcome Node'
+
+    node.navigate_icon_normal = 'welcome.png'
+    node.navigate_icon_active = 'welcome.png'  
+    node.navigate_position = 0
+
+    return node
+    
+    
 def data_management_factory(workbench):
     from data_management_worknode.data_management_worknode import DataManagementWorknode
 
@@ -25,7 +40,7 @@ def data_management_factory(workbench):
     
     node.navigate_icon_normal = 'DataManagement.png'
     node.navigate_icon_active = 'DataManagementSel.png'  
-    node.navigate_position =0
+    node.navigate_position = 1
 
     return node
 
@@ -40,7 +55,7 @@ def sample_worknode_factory(workbench):
 
     node.navigate_icon_normal = 'cloudmcsim.png'
     node.navigate_icon_active = 'cloudmcsims.png'  
-    node.navigate_position =1
+    node.navigate_position =2
 
     return node
 
@@ -52,7 +67,7 @@ def persistent_worknode_factory(workbench):
 
     node.navigate_icon_normal = 'dataanalysis.png'
     node.navigate_icon_active = 'dataanalysiss.png'  
-    node.navigate_position =2
+    node.navigate_position =3
     return node
 
 
@@ -97,26 +112,30 @@ enamldef CloudQAManifest(PluginManifest):
             shortcut = 'Ctrl+1'
             group = 'nodes'
             command = 'enaml.workbench.workflow.select_worknode'
-            parameters = {'worknode': 'sample.first_view'}
+            parameters = {'worknode': 'cloud_qa.data_management'}
         ActionItem:
             path = '/worknode/second'
             label = 'Second'
             shortcut = 'Ctrl+2'
             group = 'nodes'
             command = 'enaml.workbench.workflow.select_worknode'
-            parameters = {'worknode': 'sample.second_view'}
+            parameters = {'worknode': 'cloud_qa.sample'}
         ActionItem:
             path = '/worknode/persistent'
             label = 'Persistent'
             shortcut = 'Ctrl+3'
             group = 'nodes'
             command = 'enaml.workbench.workflow.select_worknode'
-            parameters = {'worknode': 'sample.persistent_view'}
+            parameters = {'worknode': 'cloud_qa.persistent'}
         ActionItem:
             path = '/worknode/close'
             label = 'Close Worknode'
             shortcut = 'Ctrl+D'
             command = 'enaml.workbench.workflow.close_worknode'
+    Extension:
+        id = 'welcome'
+        point = 'enaml.workbench.workflow.worknodes'
+        factory = welcome_worknode_factory 
     Extension:
         id = 'data_management'
         point = 'enaml.workbench.workflow.worknodes'

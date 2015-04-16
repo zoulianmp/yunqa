@@ -1,0 +1,178 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2013, Nucleic Development Team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file COPYING.txt, distributed with this software.
+#------------------------------------------------------------------------------
+""" An example of the `ImageView` widget.
+
+This example shows how a PNG image (in an enaml Image object) can displayed.
+
+<< autodoc-me >>
+"""
+import os
+
+from enaml.icon import Icon,IconImage
+from enaml.image import Image
+from enaml.layout.api import vbox, hbox, spacer
+from enaml.widgets.api import Window, Container, ComboBox, ImageView,PushButton
+
+
+
+def load_icon(name):
+	dirname = os.path.dirname(__file__)
+	fname = os.path.join(dirname, 'images', '%s.png' % name)
+	with open(fname, 'rb') as f:
+		data = f.read()
+	img = Image(data=data)
+	icg = IconImage(image=img)
+
+	return Icon(images=[icg])
+
+
+def load_icon(normalname,activename):
+	dirname = os.path.dirname(__file__)
+	normalfname = os.path.join(dirname, 'images', '%s.png' % normalname)
+      activename = os.path.join(dirname, 'images', '%s.png' % activename)
+
+	with open(normalfname, 'rb') as f1:
+		data1 = f1.read()
+	normalimg = Image(data=data1)
+      
+	normalicg = IconImage(image=normalimg)
+    normalimg.mode = 'normal'
+
+
+      with open(activename, 'rb') as f2:
+		data2 = f2.read()
+	activeimg = Image(data=data2)
+      activeimg.mode =  'active'
+	activeicg = IconImage(image=activeimg)
+
+	return Icon(images=[normalicg,activeicg])
+
+
+
+
+
+
+
+NEW_ICON = load_icon('document-new')
+OPEN_ICON = load_icon('document-open')
+SETTINGS_ICON = load_icon('emblem-system')
+ADD_ICON = load_icon('list-add')
+REMOVE_ICON = load_icon('list-remove')
+SEARCH_ICON = load_icon('system-search')
+BACK_ICON = load_icon('go-previous')
+
+def image_path(name):
+    dirname = os.path.dirname(__file__)
+    return os.path.join(dirname, 'images', name)
+
+
+IMAGES = {
+    'Image A': Image(data=open(image_path('img1.png'), 'rb').read()),
+    'Image B': Image(data=open(image_path('img2.png'), 'rb').read()),
+    'Image C': Image(data=open(image_path('img3.png'), 'rb').read()),
+}
+
+WELCOM_ICON =  load_icon(welcome,welcomes)
+
+welcom_icon = Icon()
+welcom_image_1 = IconImage()
+welcom_image_1.image = Image(data=open(image_path('welcome.png'), 'rb').read())
+welcom_image_1.mode = 'normal'
+
+welcom_image_2 = IconImage()
+welcom_image_2.image = Image(data=open(image_path('welcomes.png'), 'rb').read())
+welcom_image_2.mode = 'active'
+
+welcom_icon.images = [welcom_image_1,welcom_image_2]
+
+
+
+
+
+dicomrt_icon = Icon()
+dicomrt_image_1 = IconImage()
+dicomrt_image_1.image = Image(data=open(image_path('dicomrt.png'), 'rb').read())
+dicomrt_image_1.mode = 'normal'
+
+dicomrt_image_2 = IconImage()
+dicomrt_image_2.image = Image(data=open(image_path('dicomrts.png'), 'rb').read())
+dicomrt_image_2.mode = 'active'
+
+dicomrt_icon.images = [dicomrt_image_1,dicomrt_image_2]
+
+
+
+trajectory_icon = Icon()
+trajectory_image_1 = IconImage()
+trajectory_image_1.image = Image(data=open(image_path('trajectory.png'), 'rb').read())
+trajectory_image_1.mode = 'normal'
+
+trajectory_image_2 = IconImage()
+trajectory_image_2.image = Image(data=open(image_path('trajectorys.png'), 'rb').read())
+trajectory_image_2.mode = 'active'
+
+trajectory_icon.images = [trajectory_image_1,trajectory_image_2]
+
+
+
+
+cloudmcsim_icon = Icon()
+cloudmcsim_image_1 = IconImage()
+cloudmcsim_image_1.image = Image(data=open(image_path('cloudmcsim.png'), 'rb').read())
+cloudmcsim_image_1.mode = 'normal'
+
+cloudmcsim_image_2 = IconImage()
+cloudmcsim_image_2.image = Image(data=open(image_path('cloudmcsims.png'), 'rb').read())
+cloudmcsim_image_2.mode = 'active'
+
+cloudmcsim_icon.images = [cloudmcsim_image_1,cloudmcsim_image_2]
+
+
+
+
+
+
+
+enamldef Main(Window):
+    Container:
+        constraints = [
+            vbox(hbox(pt1,pt2,pt3,pt4,spacer),
+                 hbox(cbox, spacer), 
+                 img),
+        ]
+       
+        PushButton: pt1:
+          #  text = 'Push Me'
+            icon = welcom_icon
+            icon_size = (48,48)
+            clicked :: print 'I was clicked!'
+
+        PushButton: pt2:
+            #text = 'Toggle Me'
+            icon = dicomrt_icon
+            icon_size = (48,48)
+            checkable = True
+            toggled :: print 'I was toggled'
+         
+        PushButton: pt3:
+           # text = 'Push Me'
+            icon = trajectory_icon
+            icon_size = (48,48)
+            clicked :: print 'I was clicked!'
+
+        PushButton: pt4:
+           # text = 'Push Me'
+            icon = cloudmcsim_icon
+            icon_size = (48,48)
+            clicked :: print 'I was clicked!'
+
+        ComboBox: cbox:
+            items = sorted(IMAGES.keys())
+            index = 0
+        ImageView: img:
+            image << IMAGES[cbox.selected_item]

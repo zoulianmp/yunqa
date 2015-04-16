@@ -120,7 +120,12 @@ def update_iconpath(mainpath):
     print "in the update_iconpath: ", ICONIMAGE_PATH
 
 
-
+def manual_set_iconpath(path):
+    global ICONIMAGE_PATH 
+  
+    ICONIMAGE_PATH= path
+    
+    print "in the manual update_iconpath: ", ICONIMAGE_PATH
     
 def load_icon(name): 
     return _load_icon_(ICONIMAGE_PATH,name)

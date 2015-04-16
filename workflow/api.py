@@ -15,7 +15,7 @@ from .worknode import Worknode
 
 
 from utils import load_icon, load_icon2,get_extensions_of_extensionpoint, \
-                  get_worknodes_naviagate_parameters,update_iconpath
+                  get_worknodes_naviagate_parameters,update_iconpath,manual_set_iconpath
                   
 from utils import ICONIMAGE_PATH
 
