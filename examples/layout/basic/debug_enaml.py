@@ -11,7 +11,7 @@ from enaml.qt.qt_application import QtApplication
 
 def main():
     with enaml.imports():
-        from hbox_spacing import Main
+        from vertical import Main
 
     app = QtApplication()
 

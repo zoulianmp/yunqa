@@ -21,7 +21,9 @@ from enaml.widgets.api import Window, Container, ComboBox, ImageView,PushButton,
 import enaml
 with enaml.imports():
         from images_viewer import ImagesViewer
-    
+        from patient_list_page import PatientListPage
+        from data_import_page import DataImportPage
+        
  
 
 
@@ -33,35 +35,14 @@ enamldef DataManagementGUI(Container):
 
             Page:
                 title = 'Patients List'
-                Container:
-                    hug_height = 'strong'
-                 
-                
-                    QtListStrWidget: list_view:
-                        hug_width = 'medium'
-                        hug_height = 'medium'
-                        items << sorted(['233','2323','23'])
-                     
-                    Conditional: instr_form:
-                        condition << bool(True)
-                
-                    PushButton: add:
-                        text = 'Add'
-                      
-                          
-                    PushButton: edit:
-                        text = 'Edit'
-                    
-                    PushButton: delete:
-                        text = 'Delete'
-                     
+                PatientListPage:
+                    pass
 
             Page:
                 title = 'DataImporter'
               #  enabled = False
-                Container:
-                     ImagesViewer:
-                          pass
+                DataImportPage:
+                      pass
 
             Page:
                 title = 'DataReports'
