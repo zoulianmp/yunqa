@@ -13,7 +13,7 @@ ICONIMAGE_PATH = 'F:/PythonDir/CloudQA/cloud_qa/'
     
 def main():
     with enaml.imports():
-        from patient_list_page  import Main
+        from qa_analysis_view  import Main
 
     app = QtApplication()
 

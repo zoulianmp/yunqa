@@ -16,8 +16,8 @@
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>70</y>
+     <x>100</x>
+     <y>100</y>
      <width>741</width>
      <height>501</height>
     </rect>
@@ -81,9 +81,9 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>130</x>
       <y>0</y>
-      <width>321</width>
+      <width>221</width>
       <height>51</height>
      </rect>
     </property>
@@ -93,7 +93,7 @@
     <widget class="QRadioButton" name="radioButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>30</y>
        <width>89</width>
        <height>16</height>
@@ -106,7 +106,7 @@
     <widget class="QRadioButton" name="radioButton_2">
      <property name="geometry">
       <rect>
-       <x>140</x>
+       <x>90</x>
        <y>30</y>
        <width>89</width>
        <height>16</height>
@@ -119,7 +119,7 @@
     <widget class="QRadioButton" name="radioButton_3">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>150</x>
        <y>30</y>
        <width>89</width>
        <height>16</height>
@@ -129,6 +129,68 @@
       <string>Coronal</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>0</y>
+      <width>251</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Single Field Nav</string>
+    </property>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>20</y>
+       <width>75</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Next Field</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>20</y>
+       <width>75</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Up Field</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>30</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>6</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Summerized Model</string>
+    </property>
    </widget>
   </widget>
   <widget class="QTabWidget" name="tabWidget_2">
@@ -141,7 +203,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -314,7 +376,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">

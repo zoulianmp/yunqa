@@ -1,0 +1,293 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2013, Nucleic Development Team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file COPYING.txt, distributed with this software.
+#------------------------------------------------------------------------------
+from enaml.widgets.api import Container, Form, Label, Field
+from enaml.workbench.api import Extension, PluginManifest
+from workflow.api import ActionItem, MenuItem
+
+
+
+
+from enaml.layout.api import vbox, hbox, spacer,grid,align
+
+from enaml.widgets.api import Window, Container, VTKCanvas,MPLCanvas,ComboBox, \
+                              Notebook, Page, CheckBox,PushButton,GroupBox,RadioButton
+import vtk
+
+
+
+
+enamldef SliceView(Container):
+    VTKCanvas:
+        pass
+
+
+enamldef DifferView(Container):
+    VTKCanvas:
+        pass
+    
+
+    
+
+enamldef SliceShowLayout(Container):
+    constraints = [
+          vbox(
+               hbox(orientation,singlenav,summer),
+               hbox(tpsdose,mcdose,difdose),
+               hbox(crossprofile,histogram),
+              ),
+              
+     
+          
+          tpsdose.width <= 300,
+          tpsdose.width ==  mcdose.width,
+          mcdose.width ==  difdose.width,
+          
+          tpsdose.height <= 180,
+          tpsdose.height == mcdose.height,
+          mcdose.height == difdose.height,
+          
+          crossprofile.width <= 470,        
+          crossprofile.width ==  histogram.width,
+          
+          histogram.height <=180,
+          histogram.height == crossprofile.height, 
+         
+          #align('h_center',orientation,singlenav), 
+
+          ]        
+    GroupBox: orientation:
+        title << "Analysis Orientation" 
+        constraints = [
+          hbox(transvers,coronal,sagital),
+          transvers.width ==  coronal.width,
+          coronal.width == sagital.width,
+          ]                     
+        RadioButton: transvers:
+            text = 'Transverse'
+            
+        RadioButton: coronal:
+            text = 'Coronal'
+        RadioButton: sagital:
+            text = 'Sagital'
+            
+    GroupBox: singlenav:
+        title << "Single Field Navigation" 
+        constraints = [
+          hbox(pre,nex,currentfield)
+          ]                     
+        PushButton: pre:
+            text = 'Pre Field'
+            
+        PushButton: nex:
+            text = 'Next Field'
+            
+        Field: currentfield:
+            text = 'Current Field'
+    CheckBox: summer:
+        text = 'Summerized Model'  
+        
+    SliceView: tpsdose:
+        pass
+
+    SliceView: mcdose:
+        pass 
+    
+    SliceView: difdose:
+        pass   
+    
+    DifferView: crossprofile:
+        pass
+    
+    DifferView: histogram:
+        pass
+    
+    
+
+#**********************************************
+
+
+enamldef DataManageView(Container):
+    constraints = [
+              vbox(hbox(lfile,files,spacer),
+                   databook),
+             
+              ]
+    
+    Label: lfile:
+          text =' DICOM RTPlan'
+    ComboBox: files:
+          items = ['C1_IMRT9F','C2_IMRT9F','C3_IMRT9F'] 
+          index = 0 
+       
+    Notebook: databook:
+        Page:
+            title = 'Fields'
+            closable = False
+            tool_tip = 'Show the All Fields'
+            Container:
+                PushButton:
+                    text = 'Open Bar Page'
+               
+                PushButton:
+                    text = 'Open Baz Page'
+             
+                CheckBox:
+                    text = 'Tabs Closable'
+                   
+                CheckBox:
+                    text = 'Tabs Movable'
+                 
+                CheckBox:
+                    text = 'Document Style Tabs'
+        Page:
+            title = 'Structures'
+            closable = False
+            tool_tip = 'Structures to overlapped on Image'
+            Container:
+                PushButton:
+                    text = 'Open Bar Page'
+               
+                PushButton:
+                    text = 'Open Baz Page'
+             
+                CheckBox:
+                    text = 'Tabs Closable'
+                   
+                CheckBox:
+                    text = 'Tabs Movable'
+                 
+                CheckBox:
+                    text = 'Document Style Tabs'  
+        Page:
+            title = 'Analysis Criteria'
+            closable = False
+            tool_tip = 'Criteria to Analysis Dose Distribution'
+            Container:
+                PushButton:
+                    text = 'Open Bar Page'
+               
+                PushButton:
+                    text = 'Open Baz Page'
+             
+                CheckBox:
+                    text = 'Tabs Closable'
+                   
+                CheckBox:
+                    text = 'Tabs Movable'
+                 
+                CheckBox:
+                    text = 'Document Style Tabs'          
+
+
+#************************************************
+
+
+enamldef AnalysisTableView(Container):
+    Notebook: tableview:
+        Page:
+            title = 'Summerized 3D Garmma'
+            closable = False
+            tool_tip = 'Show the 3D Garmma'
+            Container:
+                PushButton:
+                    text = 'Open Bar Page'
+               
+                PushButton:
+                    text = 'Open Baz Page'
+             
+                CheckBox:
+                    text = 'Tabs Closable'
+                   
+                CheckBox:
+                    text = 'Tabs Movable'
+                 
+                CheckBox:
+                    text = 'Document Style Tabs'
+        Page:
+            title = 'Field Garmma'
+            closable = False
+            tool_tip = 'Table List for Fields Dose Analysis'
+            Container:
+                PushButton:
+                    text = 'Open Bar Page'
+               
+                PushButton:
+                    text = 'Open Baz Page'
+             
+                CheckBox:
+                    text = 'Tabs Closable'
+                   
+                CheckBox:
+                    text = 'Tabs Movable'
+                 
+                CheckBox:
+                    text = 'Document Style Tabs'  
+        Page:
+            title = 'Dose Diff Statistics'
+            closable = False
+            tool_tip = 'Dose Diff Applied to Structures'
+            Container:
+                PushButton:
+                    text = 'Open Bar Page'
+               
+                PushButton:
+                    text = 'Open Baz Page'
+             
+                CheckBox:
+                    text = 'Tabs Closable'
+                   
+                CheckBox:
+                    text = 'Tabs Movable'
+                 
+                CheckBox:
+                    text = 'Document Style Tabs' 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+enamldef QAAnalysisView(Container):
+    constraints = [
+              vbox(hbox(ldatamanage,rshow),
+                   tableanalysis),
+              
+              ldatamanage.width == rshow.width * 0.3,  
+              
+              ldatamanage.height == rshow.height,
+              ldatamanage.height == tableanalysis.height * 2.7,
+    ]
+             
+    DataManageView: ldatamanage:
+        pass
+        
+    SliceShowLayout: rshow:
+        pass
+    AnalysisTableView: tableanalysis:
+        pass
+
+enamldef Main(Window):
+    Container:
+        QAAnalysisView:
+            pass
+
+
+
+
+

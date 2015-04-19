@@ -45,29 +45,46 @@ def data_management_factory(workbench):
     return node
 
 
-def sample_worknode_factory(workbench):
-    from sample_worknode.sample_worknode import SampleWorknode
+
+def dicomrt_view_worknode_factory(workbench):
+    from dicomrt_view_worknode.dicomrt_view_worknode import DICOMRTViewWorknode
 
    
 
-    node = SampleWorknode()
-    node.window_title = 'Sample Node'
+    node = DICOMRTViewWorknode()
+    node.window_title = 'DICOMRT View'
 
-    node.navigate_icon_normal = 'cloudmcsim.png'
-    node.navigate_icon_active = 'cloudmcsims.png'  
+    node.navigate_icon_normal = 'dicomrtview.png'
+    node.navigate_icon_active = 'dicomrtviewsel.png'  
     node.navigate_position =2
+
+    return node
+    
+    
+
+def mcsim_worknode_factory(workbench):
+    from mcsim_worknode.mcsim_worknode import MCSimWorknode
+
+   
+
+    node = MCSimWorknode()
+    node.window_title = 'Monte Carlo Simulation'
+
+    node.navigate_icon_normal = 'mcsim.png'
+    node.navigate_icon_active = 'mcsimsel.png'  
+    node.navigate_position =3
 
     return node
 
 
-def persistent_worknode_factory(workbench):
-    from persistent_worknode.persistent_worknode import PersistentWorknode
-    node = PersistentWorknode()
-    node.window_title = 'Persistent View'
+def qa_analysis_worknode_factory(workbench):
+    from qa_analysis_worknode.qa_analysis_worknode import QAAnalysisWorknode
+    node = QAAnalysisWorknode()
+    node.window_title = 'QA Analysis'
 
     node.navigate_icon_normal = 'dataanalysis.png'
-    node.navigate_icon_active = 'dataanalysiss.png'  
-    node.navigate_position =3
+    node.navigate_icon_active = 'dataanalysissel.png'  
+    node.navigate_position =4
     return node
 
 
@@ -139,12 +156,16 @@ enamldef CloudQAManifest(PluginManifest):
     Extension:
         id = 'data_management'
         point = 'enaml.workbench.workflow.worknodes'
-        factory = data_management_factory 
+        factory = data_management_factory       
     Extension:
-        id = 'sample'
+        id = 'dicomrt_view'
         point = 'enaml.workbench.workflow.worknodes'
-        factory = sample_worknode_factory
+        factory = dicomrt_view_worknode_factory
     Extension:
-        id = 'persistent'
+        id = 'montecarlosim'
         point = 'enaml.workbench.workflow.worknodes'
-        factory = persistent_worknode_factory
+        factory = mcsim_worknode_factory
+    Extension:
+        id = 'qa_analysis'
+        point = 'enaml.workbench.workflow.worknodes'
+        factory = qa_analysis_worknode_factory

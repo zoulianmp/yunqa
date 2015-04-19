@@ -11,6 +11,7 @@ from enaml.workbench.ui.api import ActionItem, MenuItem, ItemGroup
 
  
  
+from enaml.core.api import Conditional 
 from enaml.layout.api import vbox, hbox, spacer, align
 from enaml.widgets.api import Window, Container, PushButton, \
                               Field, Label, CheckBox, GroupBox, \
@@ -19,85 +20,58 @@ from enaml.widgets.api import Window, Container, PushButton, \
 from cloud_qa.ext_widgets.qt_list_str_widget import QtListStrWidget
 
 
+
+
+enamldef AdvanceSearchItems(Container):
+        
+        Field: fld:
+            pass
+        PushButton: pb1:
+            text = 'Long Name Foo'
+        PushButton: pb2:
+            text = 'Bar'
+
+        Label: lid: 
+            text='Patient ID'  
+                
+        Field: txtid:
+            text=' the patient ID'
+
+
 enamldef PatientListPage(Container):
-        constraints = [hbox(dicomrt, trajectory),
-                       dicomrt.width == trajectory.width,
+        constraints = [vbox(searchbox,
+                            hbox(spacer,loadbt1,spacer)),
+                       align('h_center', searchbox, loadbt1),
         ]
-        GroupBox: dicomrt:
-            constraints = [vbox(hbox(ldir,txtdir,dirpt1),
-                                hbox(subdircheck,lcheck),
-                                reminder1,
-                                reminder2,
+        
+        GroupBox: searchbox:
+            constraints = [vbox(hbox(lname,txtname,advancebt,spacer),
+                                                                             
                                 treeviewscroll1,                               
-                                hbox(spacer,importbt1,spacer) ),
-                            align('h_center', treeviewscroll1, importbt1),
+                                ),
+                         #  align('left', txtname, txtid),
                                        
             ]
-            title = "DICOM RT Data Import" 
-            Label: ldir: 
-                text='Import Root Dir'  
+            title = "Search Patient" 
+            Label: lname: 
+                text='Patient Name'  
                 
-            Field: txtdir:
-                text=' the root dir'
-                
-            PushButton: dirpt1: 
-                text = "Browser ..."
-                
-       
-            CheckBox: subdircheck:
-                checkable = True
-            Label: lcheck: 
-                text='Search with Subfolders'  
-                
-            Label: reminder1: 
-                text='Select a Patient that has the following DICOM objects:' 
-                
-            Label: reminder2: 
-                text='Image Series, RT Structure Set, RTPlan, RTDose'   
+            Field: txtname:
+                text=' the patient name'
+                 
+                         
+            PushButton: advancebt: 
+                text='Advanced Search'  
+  
             
             ScrollArea: treeviewscroll1:       
                 QtListStrWidget: treeview1:
                     pass
-            PushButton: importbt1:
-                text = "Import Selected Patient"
+        PushButton: loadbt1:
+            text = "Load Selected Patient"
             
             
-        GroupBox: trajectory:
-            title = "Trajectory Log File Import" 
-            
-            constraints = [ vbox(hbox(lfile,txtfile,filept1),
-                                 spacing1,
-                                 spacing2,
-                                 lpreview,
-                                 treeviewscroll2,                               
-                                 hbox(spacer,importbt2,spacer)),
-                            align('h_center', treeviewscroll2, importbt2),
-                                                  
-            ]
-          
-            Label: lfile: 
-                text='Trajectory File'  
-                
-            Field: txtfile:
-                text=' the Trajectory FILE'
-                
-            PushButton: filept1: 
-                text = "Browser ..."
-              
-            Label: spacing1: 
-                pass
-            Label: spacing2: 
-                pass
-            Label: lpreview: 
-                text='Trajectory File Header Preview'   
-            
-            ScrollArea: treeviewscroll2:       
-                QtListStrWidget: treeview2:
-                    pass
-            PushButton: importbt2:
-                text = " Import Current Log File"
-            
-    
+      
  
 enamldef Main(Window):
     Container:
